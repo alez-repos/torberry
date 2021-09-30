@@ -1,0 +1,33 @@
+#summary Torberry main info
+
+= Introduction =
+Torberry is a raspbian based Linux distribution ready to serve as a transparent proxy and DNS server. Can work with of without physical isolation.
+
+= Details =
+Main features:
+ * Raspbian based
+ * includes minimal packages + tor + tor-arm + dropbear
+ * includes a web server based on cherrypy
+
+= Installation =
+Torberry is installed as usual in Raspberry. You can read [http://code.google.com/p/torberry/wiki/Installation installation instructions]
+
+= Clients configuration =
+physical-isolation (requires an additional usb interface):
+Client just connect with dhcp enable and obtain an IP on the downstream side.
+
+nonphys (default):
+Client configuratión must be done manually. Two things that you have to change are gateway and dns servers. Both must be configured with raspberry's IP.
+
+In Linux you can:
+{{{
+sudo route delete default gateway [your.current.gateway]
+sudo route add default gateway [ip.of.raspberry]
+sudo echo "nameserver [ip.of.raspberry]" > /etc/resolv.conf
+}}}
+
+= Unsupported protocols =
+As this is basically a transparent + DNS proxy, there are network protocols that wont work as you would expect in a gateway.
+
+*ICMP* is not supported by tor.
+*UDP* is not supported by tor.

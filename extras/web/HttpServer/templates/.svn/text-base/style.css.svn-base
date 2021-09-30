@@ -1,0 +1,58 @@
+body {
+font-family: calibri, sans;background: #3d3d3d;
+}
+
+.main {
+display: inline-block;
+width: 80%;
+background: #eee;
+min-height: 300px;
+padding:25px;
+}
+
+table.sys {
+border:1px solid #ccc;
+font-family: courier;
+}
+
+ul { display: inline-block; text-align: center; vertical-align: top; margin-top: 0px }
+
+li { display: block; border:1px solid #f3f3f3; background:#000; padding:10px 20px 10px 20px }
+
+a{  
+color: #ee0000;
+text-align: center;
+text-shadow: 0.1em 0.1em 0.05em #666
+}
+
+.footer {
+text-align: right;
+margin:auto;
+width: 90%;
+padding-right:25px;
+font-size: 0.8em;
+display: block;
+color: #eee;
+}
+
+.errMsg {
+width: 300px;
+padding: 10px;
+margin: auto;
+margin-bottom: 10px;
+background: #df0000;
+border: 1px solid #9a0000;
+color: #eeeeee;
+text-align: center;
+}
+
+.auth {
+margin:auto;
+border:1px solid #ccc;
+padding:15px;
+width:250px;
+}
+
+label {
+
+}

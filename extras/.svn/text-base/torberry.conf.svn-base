@@ -1,0 +1,78 @@
+########################################################
+# Torberry 0.40 torberry.conf
+# Main configuration
+# If you edit this file in windows, ensure that you
+# do with notepad++ or another tool that doesn't convert
+# file to DOS format.
+########################################################
+# . NTPD
+# ntp client used when booting to sync with tor
+NTPD="hora.uv.es"
+#
+# . OPERATION_MODE
+# setup how torberry will work. valid options are
+# nonphys and physical-isolation
+OPERATION_MODE="nonphys"
+# 
+# if operation mode is nonphys, none of the following options
+# will work and eth0 (internal port) will be the only port used 
+#
+# . UPSTREAM_IF
+# this is the port which will be used to connect
+# to internet
+UPSTREAM_IF="wlan0"
+#
+# . UPSTREAM_IP_MODE
+# you can choose dhcp or manual
+UPSTREAM_IP_MODE="dhcp"
+#
+# . UPSTREAM_IP_IPADDR
+# if you selected manual, configure ip here
+UPSTREAM_IP_IPADDR=""
+UPSTREAM_IP_NETMASK=""
+UPSTREAM_IP_NETWORK=""
+UPSTREAM_IP_BROADCAST=""
+UPSTREAM_IP_GATEWAY=""
+UPSTREAM_IP_DNS=""
+#
+# . UPSTREAM_WIRELESS
+# if you have wireless in your upstream you should set this to true
+# This will make wpa_supplicant work
+UPSTREAM_WIRELESS="false"
+UPSTREAM_WL_SSID="access_point_name"
+UPSTREAM_WL_PROTO="WPA"
+UPSTREAM_WL_KEYMGMT="WPA-PSK"
+UPSTREAM_WL_PASSWD=""
+# 
+# . DOWNSTREAM_IF
+# from here we give tor to other computers
+DOWNSTREAM_IF="eth0"
+#
+DOWNSTREAM_IP_IPADDR="172.26.0.1"
+DOWNSTREAM_IP_NETMASK="255.255.255.0"
+DOWNSTREAM_IP_NETWORK="172.26.0.0"
+DOWNSTREAM_IP_BROADCAST="172.26.0.255"
+#
+DOWNSTREAM_DHCP_FROM="172.26.0.10"
+DOWNSTREAM_DHCP_TO="172.26.0.30"
+#
+# . DOWNSTREAM_WIRELESS
+# this will activate hostap and torberry will be a wifi router
+# experimental feature
+DOWNSTREAM_WIRELESS="false"
+#
+# . ONION_ROUTER
+# If you want torberry to be an Onion router setup this parameters
+# You have to NAT this ports in your router.
+# see Tor Status to confirm if it is working.
+#
+ONION_ROUTER="false"
+ONION_ROUTER_ORPORT="9001"
+ONION_ROUTER_DIRPORT="9030"
+ONION_ROUTER_NICKNAME="torberrypi"
+ONION_ROUTER_EXITPOLICY="reject *:*"
+ONION_ROUTER_BWRATE="400"
+ONION_ROUTER_BWBURST="600"
+ONION_ROUTER_MAXONIONPENDING="76"
+ONION_ROUTER_MAXADBW="200"
+

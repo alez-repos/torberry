@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/31/trunk/extras/web/HttpServer/templates
+END
+ufile.tpl
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/26/trunk/extras/web/HttpServer/templates/ufile.tpl
+END
+config.tpl
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/31/trunk/extras/web/HttpServer/templates/config.tpl
+END
+orconfig.tpl
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/31/trunk/extras/web/HttpServer/templates/orconfig.tpl
+END
+login.tpl
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/31/trunk/extras/web/HttpServer/templates/login.tpl
+END
+header.tpl
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/31/trunk/extras/web/HttpServer/templates/header.tpl
+END
+style.css
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/31/trunk/extras/web/HttpServer/templates/style.css
+END
+frame.tpl
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/31/trunk/extras/web/HttpServer/templates/frame.tpl
+END
+uconfig.tpl
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/31/trunk/extras/web/HttpServer/templates/uconfig.tpl
+END
+footer.tpl
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/31/trunk/extras/web/HttpServer/templates/footer.tpl
+END
+control.tpl
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/26/trunk/extras/web/HttpServer/templates/control.tpl
+END
+reset.tpl
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/31/trunk/extras/web/HttpServer/templates/reset.tpl
+END
+sysstatus.tpl
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/31/trunk/extras/web/HttpServer/templates/sysstatus.tpl
+END
+status.tpl
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/26/trunk/extras/web/HttpServer/templates/status.tpl
+END

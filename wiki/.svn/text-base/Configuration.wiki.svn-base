@@ -1,0 +1,96 @@
+#summary Configuration parameters in /etc/torberry.conf
+
+= Introduction =
+
+Since torberry 0.30, /etc/torberry.conf is included. This file is POSIX compatible. All adjust should be made to this file.
+
+= Parameters =
+
+*NTPD*
+NTP server hostname or IP used when booting to sync with tor
+
+*OPERATION_MODE*
+Setup how torberry will manage the network. 
+Valid options are *nonphys* and *physical-isolation*
+
+  * nonphys: eth0 will be used for upstream and downstream. Upstream will be dhcp. Clients should change their gateway IP to torberry's IP. If you set mode to nonphys then all UPSTREAM and DOWNSTREAM parameter won't be used.
+
+  * physical-isolation: allows to choose interfaces. Also brings up a dhcpd server on downstream side.
+
+*UPSTREAM_IF*
+Interface which will be used to connect to tor. Commonly known in routers as upstream interface.
+If you choose physical-isolation this parameter is necessary
+
+*UPSTREAM_IP_MODE*
+Network configuration mode, you can choose *dhcp* or *manual*
+If you choose physical-isolation this parameter is necessary
+
+*UPSTREAM_IP_IPADDR*
+IP address of the upstream interface. If you choose manual, this parameter is necessary
+
+*UPSTREAM_IP_NETMASK*
+Network mask of the upstream interface. If you choose manual, this parameter is necessary
+
+*UPSTREAM_IP_NETWORK*
+Network address of the upstream interface. If you choose manual, this parameter is necessary
+
+*UPSTREAM_IP_BROADCAST*
+Broadcast address of the upstream interface. If you choose manual, this parameter is necessary
+
+*UPSTREAM_IP_GATEWAY*
+Gateway address of the upstream interface. If you choose manual, this parameter is necessary
+
+*UPSTREAM_IP_DNS*
+DNS address of the upstream interface. If you choose manual, this parameter is necessary
+
+*UPSTREAM_WIRELESS*
+If your UPSTREAM_IF is a wireless interface then it should be set to true. Otherwise false.
+
+*UPSTREAM_WL_SSID*
+Wireless network name (SSID)
+Necessary if upstream_wireless is true
+
+*UPSTREAM_WL_PROTO*
+Wireless protocol. Currently only WPA has been tested. Probably accepts other values. Note that torberry uses wpa_supplicant.
+Necessary if upstream_wireless is true
+
+*UPSTREAM_WL_KEYMGMT*
+Wireless encryption type. Currently only WPA-PSK has been tested.
+Necessary if upstream_wireless is true
+
+*UPSTREAM_WL_PASSWD*
+Wireless password. 
+Necessary if upstream_wireless is true
+
+*DOWNSTREAM_IF*
+This interface will server Tor to other computers. DHCP server will be enabled in this interface.
+If you choose physical-isolation this parameter is necessary
+
+*DOWNSTREAM_IP_IPADDR*
+IP address of the downstream interface
+If you choose physical-isolation this parameter is necessary
+
+*DOWNSTREAM_IP_NETMASK*
+Netmask of the downstream interface
+If you choose physical-isolation this parameter is necessary
+
+*DOWNSTREAM_IP_NETWORK*
+Network address of the downstream interface
+If you choose physical-isolation this parameter is necessary
+
+*DOWNSTREAM_IP_BROADCAST*
+Broadcast of the downstream interface
+If you choose physical-isolation this parameter is necessary
+
+*DOWNSTREAM_DHCP_FROM*
+Network address of the first IP that can be assigned by dhcpd
+If you choose physical-isolation this parameter is necessary
+
+*DOWNSTREAM_DHCP_TO*
+Network address of the last IP that can be assigned by dhcpd
+If you choose physical-isolation this parameter is necessary
+
+*DOWNSTREAM_WIRELESS*
+This will activate hostap and torberry will be a wifi router
+Experimental feature that is not available yet.
+Accepts true or false

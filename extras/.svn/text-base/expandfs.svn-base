@@ -1,0 +1,32 @@
+#!/bin/bash 
+
+echo "Torberry root partition resize tool"
+echo "This script expands your root partition to fit SD card size"
+echo "Press any key to continue, ctrl-c to exit"
+read
+
+echo "First stage will download parted. Current free space should be enough..."
+apt-get update
+apt-get install -y --no-install-recommends parted
+
+echo "Now i'm going to resize."
+PART_BEGIN=$(parted /dev/mmcblk0 -ms unit s p |grep "^2" | cut -f 2 -d:)
+fdisk /dev/mmcblk0 <<EOF
+p
+d
+2
+n
+p
+2
+$PART_BEGIN
+
+p
+w
+EOF
+
+touch /etc/resizeflag
+
+echo "First part completed! Raspberry must be rebooted to adjust ext4 partition size."
+echo "Press any key to continue..."
+read
+reboot

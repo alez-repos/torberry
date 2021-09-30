@@ -1,0 +1,115 @@
+diff -Nuar spindle-master/common spindle-master2/common
+--- spindle-master/common	2012-12-15 09:27:40.000000000 +0100
++++ spindle-master2/common	2012-12-23 19:54:30.421221077 +0100
+@@ -32,7 +32,7 @@
+ }
+ 
+ onvm_chroot() {
+-  ssh_in_to_qemu chroot /mnt "$@"
++  ssh_in_to_qemu /usr/sbin/chroot /mnt "$@"
+ }
+ 
+ shutdown_qemu() {
+@@ -60,7 +60,7 @@
+ 
+ attach_image_to_nbd() {
+   # use -v as we seem to have problems otherwise...
+-  sudo qemu-nbd --nocache -v -c $2 $1 &
++  sudo qemu-nbd -v -c $2 $1 &
+   sleep 5
+ }
+ 
+@@ -75,7 +75,7 @@
+   trap '[ -p fifo.in ] && shutdown_qemu' EXIT
+   trap '[ -p fifo.in ] && shutdown_qemu; trap - INT; kill -INT $$' INT
+   run_qemu temp.$IMGFORMAT
+-  ssh_in_to_qemu # -t chroot /mnt bash -l
++  ssh_in_to_qemu # -t /usr/sbin/chroot /mnt bash -l
+   shutdown_qemu
+   cd $OLDPWD
+ }
+@@ -128,7 +128,7 @@
+ }
+ 
+ disable_starting_services() {
+-  ssh_in_to_qemu chroot /mnt sh -ex - <<EOF
++  ssh_in_to_qemu /usr/sbin/chroot /mnt sh -ex - <<EOF
+ export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ printf '#!/bin/sh\nexit 101\n' > /usr/sbin/policy-rc.d
+ chmod 755 /usr/sbin/policy-rc.d
+@@ -136,7 +136,7 @@
+ }
+ 
+ allow_starting_services() {
+-  ssh_in_to_qemu chroot /mnt sh -ex - <<EOF
++  ssh_in_to_qemu /usr/sbin/chroot /mnt sh -ex - <<EOF
+ rm /usr/sbin/policy-rc.d
+ EOF
+ }
+diff -Nuar spindle-master/config spindle-master2/config
+--- spindle-master/config	2012-12-15 09:27:40.000000000 +0100
++++ spindle-master2/config	2012-12-23 19:02:28.928217840 +0100
+@@ -17,7 +17,7 @@
+ BOOT_DEV="$NBD_DEV"p1
+ ROOT_DEV="$NBD_DEV"p2
+ 
+-IMGFORMAT=qed
++IMGFORMAT=qcow2
+ SDSIZE=1850M
+ 
+ # Changing these isn't currently supported
+diff -Nuar spindle-master/setup_spindle_environment spindle-master2/setup_spindle_environment
+--- spindle-master/setup_spindle_environment	2012-12-15 09:27:40.000000000 +0100
++++ spindle-master2/setup_spindle_environment	2012-12-23 22:52:55.270304014 +0100
+@@ -76,7 +76,7 @@
+ sed -i $ETC_SCHROOT_SPINDLE/nssdatabases -e "s/^shadow$/#shadow/"
+ sed -i $ETC_SCHROOT_SPINDLE/nssdatabases -e "s/^group$/#group/"
+ 
+-debootstrap \
++debootstrap --no-check-gpg \
+   --include="qemu,bash-completion,augeas-tools,debootstrap,less,\
+   sudo,parted,openssh-client,e2fsprogs,dosfstools,squashfs-tools,bzip2,git,zerofree" \
+   wheezy "$TARGET_DIR" "$DEB_MIRROR" || die "Debootstrap failed"
+@@ -93,6 +93,7 @@
+ # Make sure sudo is enabled within chroot
+ chmod +w "$TARGET_DIR"/etc/sudoers
+ echo "%admin ALL=(ALL) ALL" >> "$TARGET_DIR"/etc/sudoers
++echo $USERS " ALL=(ALL) ALL" >> "$TARGET_DIR"/etc/sudoers
+ chmod -w "$TARGET_DIR"/etc/sudoers
+ 
+ printf "Please enter the password you would like for your schroot user (needed for sudo)\n"
+diff -Nuar spindle-master/wheezy-stage1 spindle-master2/wheezy-stage1
+--- spindle-master/wheezy-stage1	2012-12-15 09:27:40.000000000 +0100
++++ spindle-master2/wheezy-stage1	2012-12-23 19:12:45.503405818 +0100
+@@ -129,8 +129,8 @@
+ 
+ cd $WORKDIR
+ dotask branch_image ../$OUTDIR/stage0.$IMGFORMAT $CURIMG
+-dotask download_if_necessary http://landley.net/aboriginal/downloads/binaries/simple-root-filesystem/simple-root-filesystem-armv6l.tar.bz2
+-dotask download_if_necessary http://landley.net/aboriginal/downloads/binaries/system-image/system-image-armv6l.tar.bz2
++dotask download_if_necessary http://landley.net/aboriginal/downloads/binaries/root-filesystem/simple-root-filesystem-armv6l.tar.bz2
++dotask download_if_necessary http://landley.net/aboriginal/downloads/binaries/system-image-armv6l.tar.bz2
+ dotask download_if_necessary http://landley.net/aboriginal/downloads/binaries/extras/dropbearmulti-armv6l
+ [ -f zImage ] || tar -xf system-image-armv6l.tar.bz2 --strip-components=1 system-image-armv6l/zImage
+ tar -xvf simple-root-filesystem-armv6l.tar.bz2
+diff -Nuar spindle-master/wheezy-stage3 spindle-master2/wheezy-stage3
+--- spindle-master/wheezy-stage3	2012-12-15 09:27:40.000000000 +0100
++++ spindle-master2/wheezy-stage3	2012-12-23 20:07:35.105112457 +0100
+@@ -24,7 +24,7 @@
+ }
+ 
+ set_debconf_selections() {
+-  ssh_in_to_qemu chroot /mnt sh -l -ex - <<EOF
++  ssh_in_to_qemu /usr/sbin/chroot /mnt sh -l -ex - <<EOF
+ debconf-set-selections <<SELEOF
+ # System's default wordlist:
+ # Choices: english (Webster's Second International English wordlist), Manual symlinks setting
+@@ -106,7 +106,7 @@
+ 
+ install_packages() {
+   # we may want to break out DEBIAN_FRONTEND=noninteractive
+-  ssh_in_to_qemu chroot /mnt sh -l -ex - <<\EOF
++  ssh_in_to_qemu /usr/sbin/chroot /mnt sh -l -ex - <<\EOF
+ apt-get update
+ # install some utils
+ apt-get install -y ssh locales less fbset sudo psmisc strace module-init-tools ifplugd ed ncdu

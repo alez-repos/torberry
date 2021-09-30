@@ -1,0 +1,21 @@
+#summary Provides basic information about how to install torberry
+
+*Note that you need a card with a size of 400MB or more*
+
+= Installation =
+
+==Linux==
+
+Uncompress image:
+
+` unxz torberry.img.xz` 
+
+Write image to SD card:
+
+` dd bs=1M if=torberry.img of=/dev/mmcblk0`
+
+==Windows==
+
+Image can be uncompressed with [http://www.7-zip.org/ 7-zip]. You will also need [https://launchpad.net/win32-image-writer Win32DiskImager], just use the uncompressed image with it. It has to be done as administrator.
+
+Once you are done, you can boot torberry.
